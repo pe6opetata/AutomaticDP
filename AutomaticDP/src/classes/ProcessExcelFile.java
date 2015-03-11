@@ -669,11 +669,10 @@ public class ProcessExcelFile {
 			return "";
 		}
 		String cellValue = input.getStringCellValue();
-		int indexOfUnderscore = cellValue.indexOf("_");
-		if (indexOfUnderscore > -1) {
-			return cellValue.substring(0, indexOfUnderscore + 1);
+		if (cellValue == null || cellValue.isEmpty()) {
+			return "";
 		}
-		return "";
+		return cellValue.split("_")[0];
 	}
 
 	private static boolean isQuestionOfType(String questionType,
