@@ -16,6 +16,7 @@ public class Answer extends Question {
 	 * Default constructor.
 	 */
 	public Answer() {
+		super();
 		label = null;
 		code = 0;
 	}

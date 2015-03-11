@@ -1,26 +1,21 @@
 package gui;
 
-import javax.swing.JFrame;
-
 import java.awt.Dimension;
+
+import javax.swing.JFrame;
 
 @SuppressWarnings("serial")
 public class MyFrame extends JFrame {
-	
-	private MyPanel startPanel;
-	
-	public MyFrame() {
-		
 
-		startPanel= new MyPanel();
-		
-		
+	private MyPanel startPanel;
+
+	public MyFrame() {
+		startPanel = new MyPanel();
+
 		setupFrame();
 	}
-	
+
 	private void setupFrame() {
-		
-		
 		setTitle("AutomaticDP");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().add(startPanel);
@@ -28,6 +23,4 @@ public class MyFrame extends JFrame {
 		setVisible(true);
 	}
 
-	
-	
 }
