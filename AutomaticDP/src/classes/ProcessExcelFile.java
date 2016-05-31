@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 
+import javax.swing.text.html.HTML;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -25,7 +27,7 @@ public class ProcessExcelFile {
 
 	private static final String OSI = "osi.axs";
 	private static final String LABELS = "label.lab";
-	private static final int SIZE_OFF = 4;
+	private static int SIZE_OFF = 4;
 
 	private File file;
 	private FileInputStream inputFile;
@@ -35,13 +37,15 @@ public class ProcessExcelFile {
 		file = null;
 		inputFile = null;
 		logBuffer = new StringBuilder();
+		SIZE_OFF = 4;
 	}
 
-	public ProcessExcelFile(String fileName) throws IOException,
+	public ProcessExcelFile(String fileName, int sizeOff) throws IOException,
 			FileNotFoundException {
 		file = new File(fileName);
 		inputFile = new FileInputStream(file);
 		logBuffer = new StringBuilder();
+		SIZE_OFF = sizeOff;
 	}
 
 	public void process() throws IOException {
@@ -55,7 +59,7 @@ public class ProcessExcelFile {
 
 		HashMap<String, Question> allQuestions = new LinkedHashMap<String, Question>();
 
-		logInfo("Започвам обработката на файл " + file.getAbsolutePath()
+		logInfo("Processing file " + file.getAbsolutePath()
 				+ "...");
 
 		// Adding all questions in the hashmap
@@ -130,11 +134,11 @@ public class ProcessExcelFile {
 				+ "//" + LABELS));
 
 		BufferedWriter writeToOsi = new BufferedWriter(new OutputStreamWriter(
-				osi, "UTF8"));
+				osi, "UTF-8"));
 		// BufferedWriter writeToTables = new BufferedWriter(new
 		// OutputStreamWriter(tables));
 		BufferedWriter writeToLabel = new BufferedWriter(
-				new OutputStreamWriter(label, "UTF8"));
+				new OutputStreamWriter(label, "UTF-8"));
 
 		startLabel(writeToLabel);
 
@@ -147,10 +151,14 @@ public class ProcessExcelFile {
 		}
 
 		endLabel(writeToLabel);
+		workbook.close();
 	}
 
 	private void startLabel(BufferedWriter output) throws IOException {
 		output.write("CROSS ANALYSIS OF BREAKS");
+		output.newLine();
+		output.flush();
+		output.write("WEIGHTS WEIGHTING VARIABLES");
 		output.newLine();
 		output.flush();
 		output.newLine();
@@ -173,10 +181,10 @@ public class ProcessExcelFile {
 		output.write("FACE_TT FACE TRACE SUMMARY");
 		output.newLine();
 		output.flush();
-		output.write("SUMMARY_PRODUCT1 PM Autocharter");
+		output.write("SUMMARY_PRODUCT1 Norms/Star Chart Summary");
 		output.newLine();
 		output.flush();
-		output.write("SUMMARY_PRODUCT2 PM StarCharter");
+		output.write("SUMMARY_PRODUCT2 Norms/Star Chart Summary");
 		output.newLine();
 		output.flush();
 		output.write("IDEASEEN ALL SEEING EACH IDEA");
@@ -308,10 +316,10 @@ public class ProcessExcelFile {
 			output.write("n12   _99   ;dec=6");
 			output.newLine();
 			output.flush();
-			output.write("n20   _98   ;dec=6");
+			output.write("C n20   _98   ;dec=6");
 			output.newLine();
 			output.flush();
-			output.write("n19   _97   ;dec=6");
+			output.write("C n19   _97   ;dec=6");
 			output.newLine();
 			output.flush();
 			output.newLine();
@@ -342,19 +350,80 @@ public class ProcessExcelFile {
 			output.flush();
 			// Display proper warning
 			// to include s_rat(n).qin
-		} else if (isQuestionOfType("+2-2", question)
-				|| isQuestionOfType("-2+2", question)) {
-			output.write("#include +2-2_" + question.getAnswers().size()
-					+ ".qin;col(b)=" + (question.getEndCol() - 1) + ";qst="
-					+ question.getTitle() + ";lvl=prod");
+		} else if (isQuestionOfType("age", question)) {
+			output.write("l " + question.getTitle());
+			output.newLine();
+			output.flush();
+			output.write("ttl " + question.getTitle());
+			output.newLine();
+			output.flush();
+			output.write("ttl TOTAL");
+			output.newLine();
+			output.flush();
+			output.write("C n10  T_NW   ;wm=0");
+			output.newLine();
+			output.flush();
+			output.write("n10 TOT");
+			output.newLine();
+			output.flush();
+			int i = 1;
+			for (Answer answer : question.getAnswers()) {
+				output.write("n01   " + i + "   ;c=c(" + question.getStartCol()
+						+ "," + question.getEndCol() + ") .in. ("
+						+ answer.getCode() + ");fac=" + answer.getLabel().replaceAll("\\D+", ""));
+				output.newLine();
+				output.flush();
+				i++;
+			}
+			output.write("n12   _99   ;dec=6");
+			output.newLine();
+			output.flush();
+			output.write("n20   _98   ;dec=6");
+			output.newLine();
+			output.flush();
+			output.write("n19   _97   ;dec=6");
 			output.newLine();
 			output.flush();
 			output.newLine();
 			output.flush();
 			output.newLine();
 			output.flush();
-			// Display proper warning
-			// to include +2-2_(n).qin
+		} else if (isQuestionOfType("gender", question)) {
+			output.write("l " + question.getTitle());
+			output.newLine();
+			output.flush();
+			output.write("ttl " + question.getTitle());
+			output.newLine();
+			output.flush();
+			output.write("ttl TOTAL");
+			output.newLine();
+			output.flush();
+			output.write("C n10  T_NW   ;wm=0");
+			output.newLine();
+			output.flush();
+			output.write("n10 TOT");
+			output.newLine();
+			output.flush();
+			output.write("n03 AGE");
+			output.newLine();
+			output.flush();
+			output.write("n03 GENDER");
+			output.newLine();
+			output.flush();
+			int i = 1;
+			for (Answer answer : question.getAnswers()) {
+				output.write("n01   " + i + "   ;c=c(" + question.getStartCol()
+						+ "," + question.getEndCol() + ") .in. ("
+						+ answer.getCode() + ")");
+				output.newLine();
+				output.flush();
+				i++;
+			}
+			output.newLine();
+			output.flush();
+			output.newLine();
+			output.flush();
+
 		}
 
 	}
@@ -624,6 +693,57 @@ public class ProcessExcelFile {
 			output.newLine();
 			output.flush();
 
+		} else if (isQuestionOfType("age", question)) {
+			output.write(question.getTitle().toUpperCase() + " "
+					+ question.getTitle().toUpperCase() + ". "
+					+ "AGE OF RESPONDENTS - DETAILED");
+			output.newLine();
+			output.flush();
+			int i = 1;
+			for (Answer answer : question.getAnswers()) {
+				output.write("   " + i + " " + answer.getLabel());
+				output.newLine();
+				output.flush();
+				i++;
+			}
+			output.write("   _99 Mean");
+			output.newLine();
+			output.flush();
+			output.write("   _98 Error Variance");
+			output.newLine();
+			output.flush();
+			output.write("   _97 Standard Error");
+			output.newLine();
+			output.flush();
+			output.newLine();
+			output.flush();
+			output.newLine();
+			output.flush();
+			
+		} else if (isQuestionOfType("gender", question)) {
+			output.write(question.getTitle().toUpperCase() + " "
+					+ question.getTitle().toUpperCase() + ". "
+					+ "AGE & GENDER OF RESPONDENTS");
+			output.newLine();
+			output.flush();
+			output.write("AGE AGE GROUP");
+			output.newLine();
+			output.flush();
+			output.write("GENDER GENDER");
+			output.newLine();
+			output.flush();
+			int i = 1;
+			for (Answer answer : question.getAnswers()) {
+				output.write("   " + i + " " + answer.getLabel());
+				output.newLine();
+				output.flush();
+				i++;
+			}
+			output.newLine();
+			output.flush();
+			output.newLine();
+			output.flush();
+			
 		} else if (question.getType() != null && !question.getType().isEmpty()) {
 			output.write(question.getTitle().toUpperCase() + " "
 					+ question.getTitle().toUpperCase() + ". "
@@ -638,7 +758,7 @@ public class ProcessExcelFile {
 				i++;
 			}
 			if (question.getType().equals("multi")) {
-				output.write("   _99 Mean");
+				output.write("   _99 Average number of mentions");
 				output.newLine();
 				output.flush();
 				output.write("   _98 Error Variance");
