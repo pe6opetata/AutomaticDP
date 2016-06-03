@@ -300,7 +300,7 @@ public class ProcessExcelFile {
 				output.flush();
 				i++;
 			}
-			if (question.getTitle().substring(1).length() == 1) {
+			/*if (question.getTitle().substring(1).length() == 1) {
 				output.write("n25   ;inc=t10"
 						+ question.getTitle().substring(1) + ";c=t10"
 						+ question.getTitle().substring(1) + " .gt. 0");
@@ -312,8 +312,17 @@ public class ProcessExcelFile {
 						+ " .gt. 0");
 				output.newLine();
 				output.flush();
-			}
-			output.write("n12   _99   ;dec=6");
+			}*/
+			output.write("n05   ;op=1;id=z1;norow");
+			output.newLine();
+			output.flush();
+			output.write("n15  ;c=-1;op=1;id=z2");
+			output.newLine();
+			output.flush();
+			output.write("n01   _99 ;op=1;ex=z1/z2;dec=6");
+			output.newLine();
+			output.flush();
+			output.write("C n12   _99   ;dec=6");
 			output.newLine();
 			output.flush();
 			output.write("C n20   _98   ;dec=6");
@@ -686,6 +695,18 @@ public class ProcessExcelFile {
 			output.newLine();
 			output.flush();
 			output.write("  _97 Standard Error");
+			output.newLine();
+			output.flush();
+			output.write("FT2_3 <question_name2>(3). DEGREE TO WHICH PEOPLE WOULD FEEL EMOTION ABOUT THIS <specify>: Neutral");
+			output.newLine();
+			output.flush();
+			output.write("  1 Slightly positive");
+			output.newLine();
+			output.flush();
+			output.write("  2 Completely neutral");
+			output.newLine();
+			output.flush();
+			output.write("  3 Slightly negative");
 			output.newLine();
 			output.flush();
 			output.newLine();
