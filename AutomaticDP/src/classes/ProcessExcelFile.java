@@ -163,7 +163,7 @@ public class ProcessExcelFile {
 		output.flush();
 		output.newLine();
 		output.flush();
-		output.write("TWOSHAPES &#0025; THOSE RATING THE IDEA AS ONE TO SELL OR DOUBLE SHARES IN ");
+		output.write("TWOSHAPES \u0019 THOSE RATING THE IDEA AS ONE TO SELL OR DOUBLE SHARES IN ");
 		output.newLine();
 		output.flush();
 		output.write("IDEAS ALL SEEING EACH IDEA");
@@ -181,10 +181,10 @@ public class ProcessExcelFile {
 		output.write("FACE_TT FACE TRACE SUMMARY");
 		output.newLine();
 		output.flush();
-		output.write("SUMMARY_PRODUCT1 Norms/Star Chart Summary");
+		output.write("SUMMARY_PRODUCT1 Autocharting Summary Table");
 		output.newLine();
 		output.flush();
-		output.write("SUMMARY_PRODUCT2 Norms/Star Chart Summary");
+		output.write("SUMMARY_PRODUCT2 Norms Summary");
 		output.newLine();
 		output.flush();
 		output.write("IDEASEEN ALL SEEING EACH IDEA");
@@ -222,6 +222,9 @@ public class ProcessExcelFile {
 		output.newLine();
 		output.flush();
 		output.write("T_FT2_2 Base: All who feel emotion: Happiness");
+		output.newLine();
+		output.flush();
+		output.write("T_FT2_3 Base: All who feel emotion: Neutral");
 		output.newLine();
 		output.flush();
 		output.write("T_FT2_4 Base: All who feel emotion: Sadness");
@@ -458,7 +461,7 @@ public class ProcessExcelFile {
 
 			i = 1;
 
-			output.write(question.getTitle().toUpperCase() + "I &#0025; "
+			output.write(question.getTitle().toUpperCase() + "I \u0019 "
 					+ question.getTitle().toUpperCase()
 					+ "(i). STANDARD RATINGS: TOP BOX - " + question.getLabel());
 			output.newLine();
@@ -489,7 +492,7 @@ public class ProcessExcelFile {
 
 			i = 1;
 
-			output.write("S_" + question.getTitle().toUpperCase() + " &#0025; "
+			output.write("S_" + question.getTitle().toUpperCase() + " \u0019 "
 					+ "SUMMARY:");
 			output.newLine();
 			output.flush();
@@ -601,7 +604,7 @@ public class ProcessExcelFile {
 			output.write("  _97 Standard Error");
 			output.newLine();
 			output.flush();
-			output.write("S_FT1 &#0025; SUMMARY:");
+			output.write("S_FT1 \u0019 SUMMARY:");
 			output.newLine();
 			output.flush();
 			output.write("FT1 <question_name>. WHICH OF THESE FACES BEST EXPRESSES HOW YOU THINK PEOPLE WOULD FEEL ABOUT THIS <specify>?");
@@ -655,7 +658,7 @@ public class ProcessExcelFile {
 			output.write("  _97 Standard Error");
 			output.newLine();
 			output.flush();
-			output.write("S_FT2 &#0025; SUMMARY:");
+			output.write("S_FT2 \u0019 SUMMARY:");
 			output.newLine();
 			output.flush();
 			output.write("FT2_1 <question_name2>(1). DEGREE TO WHICH PEOPLE WOULD FEEL EMOTION ABOUT THIS <specify>: Surprise");
@@ -700,13 +703,13 @@ public class ProcessExcelFile {
 			output.write("FT2_3 <question_name2>(3). DEGREE TO WHICH PEOPLE WOULD FEEL EMOTION ABOUT THIS <specify>: Neutral");
 			output.newLine();
 			output.flush();
-			output.write("  1 Slightly positive");
+			output.write("  3 Slightly positive");
 			output.newLine();
 			output.flush();
 			output.write("  2 Completely neutral");
 			output.newLine();
 			output.flush();
-			output.write("  3 Slightly negative");
+			output.write("  1 Slightly negative");
 			output.newLine();
 			output.flush();
 			output.newLine();
